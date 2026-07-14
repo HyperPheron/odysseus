@@ -1,0 +1,17 @@
+#!/bin/sh
+# Pre-commit hook: run secret scan on staged changes.
+# Blocks the commit if secrets are detected.
+
+# Resolve a working Python: repo venv first, then py launcher, then PATH.
+if [ -x ".venv/Scripts/python.exe" ]; then
+  PY=".venv/Scripts/python.exe"
+elif command -v py >/dev/null 2>&1; then
+  PY="py"
+elif command -v python3 >/dev/null 2>&1; then
+  PY="python3"
+else
+  PY="python"
+fi
+
+"$PY" scripts/secret_scan.py
+exit $?
