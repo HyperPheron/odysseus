@@ -1,0 +1,7 @@
+/* Hallmark · pre-emit critique: P4 H4 E4 S4 R5 V4 */
+
+.app-shell {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}

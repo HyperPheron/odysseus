@@ -126,7 +126,12 @@ app = FastAPI(
 
 # ========= CORS =========
 CORS_ALLOW_METHODS = ["GET", "POST", "PUT", "PATCH", "DELETE"]
-allowed_origins = os.getenv("ALLOWED_ORIGINS", "http://localhost,http://127.0.0.1").split(",")
+allowed_origins = os.getenv(
+    "ALLOWED_ORIGINS",
+    "http://localhost,http://127.0.0.1,"
+    "http://localhost:1420,http://127.0.0.1:1420,"
+    "http://tauri.localhost,https://tauri.localhost,tauri://localhost",
+).split(",")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=allowed_origins,

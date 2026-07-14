@@ -1,0 +1,65 @@
+/*
+ * Hermes design tokens — HERMES-ARCHITECTURE.md §7.
+ * Genre: atmospheric command-center, dark paper only (deliberate single
+ * direction, not a default — see architecture §7). No inline color/space/
+ * font values anywhere else in the app; everything reads from here.
+ */
+
+:root {
+  color-scheme: dark;
+
+  /* Paper — OKLCH lightness locked under 30% */
+  --paper-0: oklch(15% 0.012 260); /* window background */
+  --paper-1: oklch(19% 0.014 260); /* panel surface */
+  --paper-2: oklch(23% 0.016 260); /* raised / hovered surface */
+  --paper-border: oklch(32% 0.02 260 / 0.55);
+  --paper-border-strong: oklch(40% 0.024 260 / 0.8);
+
+  /* Ink */
+  --ink-0: oklch(93% 0.008 260); /* primary text */
+  --ink-1: oklch(72% 0.01 260); /* secondary text */
+  --ink-2: oklch(52% 0.012 260); /* muted / disabled */
+
+  /* Single warm accent — signals, focus, active states. Not decorative filler. */
+  --accent: oklch(68% 0.16 55);
+  --accent-hover: oklch(74% 0.17 55);
+  --accent-active: oklch(60% 0.15 55);
+  --accent-ink: oklch(14% 0.01 55); /* text on accent-filled surfaces */
+
+  /* Semantic data color — confined to data (P/L, deltas, status dots). Never decorative. */
+  --data-positive: oklch(66% 0.15 145);
+  --data-negative: oklch(62% 0.19 25);
+  --data-neutral: var(--ink-1);
+
+  /* Type — 2+1 pairing. No Inter-default look. All headings roman (no italics). */
+  --font-display: 'Fraunces Variable', 'Iowan Old Style', 'Georgia', serif;
+  --font-body: 'Public Sans Variable', 'Segoe UI', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono Variable', 'Cascadia Code', 'Consolas', monospace;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.75rem;
+  --text-display: clamp(2rem, 1.4rem + 2vw, 3rem);
+
+  /* Spacing — intentional rhythm, not uniform padding everywhere */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 14px;
+
+  --shadow-panel: 0 1px 2px oklch(0% 0 0 / 0.4), 0 8px 24px oklch(0% 0 0 / 0.35);
+  --shadow-raised: 0 2px 4px oklch(0% 0 0 / 0.5), 0 16px 40px oklch(0% 0 0 / 0.45);
+
+  --duration-fast: 120ms;
+  --duration-normal: 220ms;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
