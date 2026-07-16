@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  timescale:
+    image: timescale/timescaledb:latest-pg17
+    container_name: hermes-timescale
+    environment:
+      POSTGRES_DB: hermes
+      POSTGRES_USER: hermes_admin
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-dev_insecure_default_do_not_use_in_production}
+      POSTGRES_HOST_AUTH_METHOD: scram-sha-256
+      POSTGRES_INITDB_ARGS: --auth-host=scram-sha-256
+      GW_SIGNALS_PASSWORD: ${GW_SIGNALS_PASSWORD:-dev_gw_signals}
+      GW_SECURITY_PASSWORD: ${GW_SECURITY_PASSWORD:-dev_gw_security}
+      GW_DISCORD_PASSWORD: ${GW_DISCORD_PASSWORD:-dev_gw_discord}
+    ports:
+      - "5433:5432"
+    volumes:
+      - hermes_data:/var/lib/postgresql/data
+      - ../db/init:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U hermes_admin -d hermes"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  hermes_data:

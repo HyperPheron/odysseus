@@ -48,3 +48,10 @@ pytest-asyncio
 # TestClient import when only classic httpx is present. Runtime code keeps
 # using `httpx` above; this is test-client only.
 httpx2
+# Async PostgreSQL driver for gateway service (gateways/db.py)
+asyncpg
+# WebSocket protocol support for uvicorn — without it uvicorn refuses the
+# upgrade and /ws/signals 404s. Bare `uvicorn` above does not include it.
+websockets
+# Coverage reporting for the gateway test suite (80%+ gate)
+pytest-cov

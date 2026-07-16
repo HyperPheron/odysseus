@@ -22,6 +22,10 @@ PATTERNS = {
     "Generic Secret": re.compile(r"(api[_-]?key|secret|token|password)\s*[:=]\s*['\"][^'\"]{12,}['\"]", re.IGNORECASE),
 }
 
+# Quoted shell env-var reference like PGPASSWORD="$POSTGRES_PASSWORD" —
+# indirection, not a literal secret value.
+ENV_REF = re.compile(r"['\"]\$\{?[A-Za-z_][A-Za-z0-9_]*\}?['\"]")
+
 # Files to skip
 SKIP_PATTERNS = [
     r"\.lock$",
@@ -84,8 +88,17 @@ def scan_for_secrets(diff_output):
             if should_skip_file(current_file or ""):
                 continue
 
+            # Explicit reviewed-and-approved escape hatch, same idea as
+            # `gitleaks:allow`. The pragma must sit on the flagged line.
+            if "secret-scan: allow" in content:
+                continue
+
             # Check against all patterns
             for pattern_name, pattern in PATTERNS.items():
+                if pattern_name == "Generic Secret" and ENV_REF.search(content):
+                    # Quoted value is a shell env-var reference ("$VAR"),
+                    # not a literal secret.
+                    continue
                 if pattern.search(content):
                     findings.append(
                         f"{current_file}:{current_line_num}: {pattern_name} detected"
