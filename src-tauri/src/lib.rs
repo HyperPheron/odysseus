@@ -1,3 +1,5 @@
+mod feed_tokens;
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
   tauri::Builder::default()
@@ -11,6 +13,10 @@ pub fn run() {
       }
       Ok(())
     })
+    .invoke_handler(tauri::generate_handler![
+      feed_tokens::get_feed_token,
+      feed_tokens::set_feed_token
+    ])
     .run(tauri::generate_context!())
     .expect("error while running tauri application");
 }

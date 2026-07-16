@@ -35,4 +35,28 @@ export const PANEL_MANIFEST: PanelManifestEntry[] = [
     permissions: ['read', 'write'],
     surface: 'native',
   },
+  {
+    id: 'signals',
+    title: 'Trading Signals',
+    dataSource: 'gateway:signals',
+    refreshPolicy: 'live/ws',
+    permissions: ['read'],
+    surface: 'native',
+  },
+  {
+    id: 'security-monitor',
+    title: 'Security Monitor',
+    dataSource: 'gateway:security',
+    refreshPolicy: 'interval:30s',
+    permissions: ['read'],
+    surface: 'native',
+  },
+  {
+    id: 'discord-recap',
+    title: 'Discord Intel Recap',
+    dataSource: 'gateway:discord',
+    refreshPolicy: 'interval:60s',
+    permissions: ['read'],
+    surface: 'native',
+  },
 ]
